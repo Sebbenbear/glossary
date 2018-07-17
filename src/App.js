@@ -5,17 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import EnterTerm from './components/EnterTerm';
-
-
-// const data = {
-//   state = {
-//     acronym: 'AOT',
-//     term: 'Ahead of Time Compilation',
-//     definition: 'Compiles high level code to native machine conde like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
-//     tags: 'compilers',
-//   };
-// }
-
+import Terms from './components/Terms';
 
 const App = () => (
   <Router>
@@ -33,6 +23,20 @@ const App = () => (
   </Router>
 );
 
+const data = [
+  {
+    acronym: 'AOT',
+    term: 'Ahead of Time Compilation',
+    definition: 'Compiles high level code to native machine conde like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
+    tags: ['compilers', "virtual_machines"],
+  }, {
+    acronym: '',
+    term: 'Android',
+    definition: 'Mobile operating system, based on the Linux kernel.',
+    tags: ['android', 'mobile', 'operating_systems'],
+  }
+];
+
 const Home = () => (
   <div className="App">
     <Link to="/enterterm">
@@ -42,10 +46,13 @@ const Home = () => (
       </Button>
     </Link>
 
-    <p className="App-intro">
-      There's nothing here, add a term!
-    </p>
-  </div>
+    { !data && <p className="App-intro">
+        There's nothing here, add a term!
+      </p> 
+    }
+    
+    { data && <Terms data={data}/> }
+    </div>
 );
 
 // const Topics = ({ match }) => (

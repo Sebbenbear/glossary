@@ -8,7 +8,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 
-
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -49,12 +48,12 @@ class EnterTerm extends React.Component {
     }
   };
 
-  handleDone = event => {
+  handleDone = () => {
     const data = Object.assign({
         acronym: this.state.acronym, 
         term: this.state.term,
         definition: this.state.definition,
-        tags: this.state.tags.split(/(\s+)/)
+        tags: this.state.tags.split(/(\s+)/) // store tags in an array for manipulation later
     }, this.state);
     console.table(data);
   }
