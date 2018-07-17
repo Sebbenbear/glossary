@@ -30,8 +30,7 @@ class EnterTerm extends React.Component {
     const value = event.target.value;
     switch(event.target.id) {
       case 'acronym': 
-        this.setState({ acronym: value });
-        console.error("Handling error event");
+        this.setState({ acronym: value.toUpperCase() }); // Acronyms should be upper case
         break;
       case 'term': 
         this.setState({ term: value });
@@ -44,9 +43,19 @@ class EnterTerm extends React.Component {
         break;
       default:
         // throw exception
-        console.err("Invalid state mapping");
+        console.error("Handling error event");
     }
   };
+
+  handleDone = event => {
+    const data = Object.assign({
+        acronym: this.state.acronym, 
+        term: this.state.term,
+        definition: this.state.definition,
+        tags: this.state.tags.split(/(\s+)/)
+    }, this.state);
+    console.table(data);
+  }
 
   render() {
     const { classes } = this.props;
@@ -74,7 +83,7 @@ class EnterTerm extends React.Component {
           <FormHelperText id="tags-helper-text">Separate tags with spaces</FormHelperText>
         </FormControl>
 
-        <Button>Done</Button>
+        <Button onClick={this.handleDone}>Done</Button>
       </div>
     );
   }

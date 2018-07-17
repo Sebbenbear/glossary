@@ -6,6 +6,17 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import EnterTerm from './components/EnterTerm';
 
+
+// const data = {
+//   state = {
+//     acronym: 'AOT',
+//     term: 'Ahead of Time Compilation',
+//     definition: 'Compiles high level code to native machine conde like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
+//     tags: 'compilers',
+//   };
+// }
+
+
 const App = () => (
   <Router>
     <div>
