@@ -4,6 +4,10 @@
 
 This is a small app that I built to keep track of all the different technical terms I'm learning at [Recurse Center](https://www.recurse.com/).
 
+## Add the database
+
+Follow these [instructions](https://firebase.google.com/docs/database/web/start)
+
 ## Deployment Instructions
 
 #### 1. Add this project to [Firebase](https://console.firebase.google.com/).
