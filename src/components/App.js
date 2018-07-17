@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import EnterTerm from './EnterTerm';
 import Terms from './Terms';
 
+import * as routes from '../constants/routes';
+
 const App = () => (
   <Router>
     <div>
@@ -17,8 +19,8 @@ const App = () => (
       </div>
 
       {/* <Route path="/signup" component={SignUp} /> */}
-      <Route exact path="/" component={Home} />
-      <Route path="/enterterm" component={EnterTerm} />
+      <Route exact path={routes.LANDING} component={Home} />
+      <Route path={routes.ENTER_TERM} component={EnterTerm} />
       {/* <Route path="/topics" component={Topics} /> */}
     </div>
   </Router>
@@ -46,7 +48,7 @@ const Home = () => (
     }
     
     { data && <Terms data={data}/> }
-    <Link to="/enterterm">
+    <Link to={routes.ENTER_TERM}>
       <Button variant="fab" color="primary" aria-label="Add" style={{ position: 'absolute', bottom: "20px", right: "20px" }}> {/* #C1D09B - should be this colour*/} 
         <AddIcon />
       </Button>
