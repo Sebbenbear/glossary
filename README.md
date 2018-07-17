@@ -1,3 +1,47 @@
+# Glossary
+
+## About
+
+This is a small app that I built to keep track of all the different technical terms I'm learning at [Recurse Center](https://www.recurse.com/).
+
+## Deployment Instructions
+
+#### 1. Add this project to [Firebase](https://console.firebase.google.com/).
+
+#### 2. Run the production build before deploying
+
+This will create the build folder containing an optimised, production-ready version of the app.
+
+`npm run build`
+
+#### 3. Install the firebase command line tools
+
+`npm install -g firebase-tools`
+
+#### 4. Initialise Firebase in the current directory
+
+`firebase init`
+
+1. *Which Firebase CLI features do you want to setup for this folder?* (Select **database** and **hosting** with spacebar, then hit Enter)
+1. *Select a default Firebase project for this directory:* **glossary (glossary-xxxx)** (or something else if you chose a different name)
+1. *What file should be used for Database Rules?* **database.rules.json**
+1. *What do you want to use as your public directory?* **build**
+1. *Configure as a single-page app (rewrite all urls to /index.html)?* **Yes**
+1. *File build/index.html already exists. Overwrite?* **No**
+
+The following files will be created:
+- .firebaserc
+- database.rules.json
+- firebase.json
+
+#### 5. Deploy the application
+
+`firebase deploy`
+
+Now, just click on the link and your app should be up and ready to go!
+
+# Create React App Info
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
