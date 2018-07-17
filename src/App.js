@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import EnterTerm from './components/EnterTerm';
+
 const App = () => (
   <Router>
     <div>
@@ -14,7 +16,7 @@ const App = () => (
       </div>
 
       <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
+      <Route path="/enterterm" component={EnterTerm} />
       {/* <Route path="/topics" component={Topics} /> */}
     </div>
   </Router>
@@ -22,7 +24,8 @@ const App = () => (
 
 const Home = () => (
   <div className="App">
-    <Link to="/about">
+    <Link to="/enterterm">
+    {/* #C1D09B - should be this colour*/} 
       <Button variant="fab" color="primary" aria-label="Add">
         <AddIcon />
       </Button>
@@ -31,12 +34,6 @@ const Home = () => (
     <p className="App-intro">
       There's nothing here, add a term!
     </p>
-  </div>
-);
-
-const About = () => (
-  <div>
-    <h2>Insert Add page here</h2>
   </div>
 );
 
