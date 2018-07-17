@@ -11,7 +11,7 @@ class App extends Component {
           <h1 className="App-title">Tech Glossary</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          There's nothing here, add a term!
         </p>
       </div>
     );
