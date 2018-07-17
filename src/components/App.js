@@ -4,8 +4,8 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import EnterTerm from './components/EnterTerm';
-import Terms from './components/Terms';
+import EnterTerm from './EnterTerm';
+import Terms from './Terms';
 
 const App = () => (
   <Router>
@@ -16,6 +16,7 @@ const App = () => (
         </header>
       </div>
 
+      {/* <Route path="/signup" component={SignUp} /> */}
       <Route exact path="/" component={Home} />
       <Route path="/enterterm" component={EnterTerm} />
       {/* <Route path="/topics" component={Topics} /> */}
