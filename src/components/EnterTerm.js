@@ -17,6 +17,11 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
   },
+  button: {
+    position: 'absolute',
+    bottom: "5%",
+    left: "50%",
+  }
 });
 
 class EnterTerm extends React.Component {
@@ -43,7 +48,6 @@ class EnterTerm extends React.Component {
         this.setState({ tags: value }); // keep the string value of the tags, split them when you need to use them
         break;
       default:
-        // throw exception
         console.error("Handling error event");
     }
   };
@@ -62,30 +66,32 @@ class EnterTerm extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.container}>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="acronym-simple">Acronym</InputLabel>
-          <Input id="acronym" value={this.state.acronym} onChange={this.handleChange} />
-        </FormControl>
+      <div>
+        <div className={classes.container}>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="acronym-simple">Acronym</InputLabel>
+            <Input id="acronym" value={this.state.acronym} onChange={this.handleChange} />
+            </FormControl>
 
-        <FormControl className={classes.formControl} >
-          <InputLabel htmlFor="term-simple">Term</InputLabel>
-          <Input id="term" value={this.state.term} onChange={this.handleChange} />
-        </FormControl>
+            <FormControl className={classes.formControl} >
+            <InputLabel htmlFor="term-simple">Term</InputLabel>
+            <Input id="term" value={this.state.term} onChange={this.handleChange} />
+            </FormControl>
 
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="definition-simple">Definition</InputLabel>
-          <Input id="definition" value={this.state.definition} onChange={this.handleChange} />
-        </FormControl>
+            <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="definition-simple">Definition</InputLabel>
+            <Input id="definition" value={this.state.definition} onChange={this.handleChange} />
+            </FormControl>
 
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="tags-simple">Tags</InputLabel>
-          <Input id="tags" value={this.state.tags} onChange={this.handleChange} />
-          <FormHelperText id="tags-helper-text">Separate tags with " , "</FormHelperText>
-        </FormControl>
-        
+            <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="tags-simple">Tags</InputLabel>
+            <Input id="tags" value={this.state.tags} onChange={this.handleChange} />
+            <FormHelperText id="tags-helper-text">Separate tags with " , "</FormHelperText>
+          </FormControl>
+        </div>
+
         <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button onClick={this.handleDone}>Done</Button>
+            <Button variant="contained" color="primary" aria-label="Done" className={classes.button} onClick={this.handleDone}>Done</Button>
         </Link>
       </div>
     );
