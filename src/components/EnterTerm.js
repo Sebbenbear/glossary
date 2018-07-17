@@ -6,6 +6,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
+
 
 const styles = theme => ({
   container: {
@@ -82,8 +84,10 @@ class EnterTerm extends React.Component {
           <Input id="tags" value={this.state.tags} onChange={this.handleChange} />
           <FormHelperText id="tags-helper-text">Separate tags with spaces</FormHelperText>
         </FormControl>
-
-        <Button onClick={this.handleDone}>Done</Button>
+        
+        <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button onClick={this.handleDone}>Done</Button>
+        </Link>
       </div>
     );
   }
