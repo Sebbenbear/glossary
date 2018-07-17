@@ -39,20 +39,18 @@ const data = [
 
 const Home = () => (
   <div className="App">
-    <Link to="/enterterm">
-    {/* #C1D09B - should be this colour*/} 
-      <Button variant="fab" color="primary" aria-label="Add">
-        <AddIcon />
-      </Button>
-    </Link>
-
     { !data && <p className="App-intro">
         There's nothing here, add a term!
       </p> 
     }
     
     { data && <Terms data={data}/> }
-    </div>
+    <Link to="/enterterm">
+      <Button variant="fab" color="primary" aria-label="Add" style={{ position: 'absolute', bottom: "20px", right: "20px" }}> {/* #C1D09B - should be this colour*/} 
+        <AddIcon />
+      </Button>
+    </Link>
+  </div>
 );
 
 // const Topics = ({ match }) => (

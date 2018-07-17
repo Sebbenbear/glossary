@@ -1,51 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: '360px',
-    backgroundColor: theme.palette.background.paper,
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
   },
 });
 
-const data = [
-  {
-    acronym: 'AOT',
-    term: 'Ahead of Time Compilation',
-    definition: 'Compiles high level code to native machine conde like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
-    tags: ['compilers', "virtual_machines"],
-  }, {
-    acronym: '',
-    term: 'Android',
-    definition: 'Mobile operating system, based on the Linux kernel.',
-    tags: ['android', 'mobile', 'operating_systems'],
+class Terms extends React.Component {
+  state = {
+    expanded: null,
+    data: [
+        {
+          acronym: 'AOT',
+          term: 'Ahead of Time Compilation',
+          definition: 'Compiles high level code to native machine code like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
+          tags: ['compilers', "virtual_machines"],
+        }, {
+          acronym: '',
+          term: 'Android',
+          definition: 'Mobile operating system, based on the Linux kernel.',
+          tags: ['android', 'mobile', 'operating_systems'],
+        }
+      ]
+  };
+
+  generateListItems = data => {
+    const { classes } = this.props;
+
+    return this.state.data.map((datum) => (
+        <ExpansionPanel key={datum.term} expanded={this.state.expanded === datum.term} onChange={this.handleChange(datum.term)}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={classes.heading}>{datum.term}</Typography>
+            {datum.acronym && <Typography className={classes.secondaryHeading}>{datum.acronym}</Typography>}
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+                <Typography>{datum.definition}</Typography>
+            </ExpansionPanelDetails>
+        </ExpansionPanel>
+    ))
+  };
+
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        {this.generateListItems()}
+      </div>
+    );
   }
-];
-
-const listItems = data.map((datum) => (
-  <div>
-    <ListItem button>
-      <ListItemText primary={datum.term} />
-    </ListItem>
-    <Divider />
-  </div>
-));
-
-function Terms(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <List component="nav">
-        {listItems}
-      </List>
-    </div>
-  );
 }
 
 Terms.propTypes = {
