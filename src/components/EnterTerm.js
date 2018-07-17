@@ -53,7 +53,7 @@ class EnterTerm extends React.Component {
         acronym: this.state.acronym, 
         term: this.state.term,
         definition: this.state.definition,
-        tags: this.state.tags.split(/(\s+)/) // store tags in an array for manipulation later
+        tags: this.state.tags.split(',') // store tags in an array for manipulation later
     }, this.state);
     console.table(data);
   }
@@ -81,7 +81,7 @@ class EnterTerm extends React.Component {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="tags-simple">Tags</InputLabel>
           <Input id="tags" value={this.state.tags} onChange={this.handleChange} />
-          <FormHelperText id="tags-helper-text">Separate tags with spaces</FormHelperText>
+          <FormHelperText id="tags-helper-text">Separate tags with " , "</FormHelperText>
         </FormControl>
         
         <Link to="/" style={{ textDecoration: 'none' }}>

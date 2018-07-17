@@ -6,6 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
   root: {
@@ -20,6 +21,9 @@ const styles = theme => ({
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
   },
+  chip: {
+    margin: theme.spacing.unit,
+  },
 });
 
 class Terms extends React.Component {
@@ -30,12 +34,12 @@ class Terms extends React.Component {
           acronym: 'AOT',
           term: 'Ahead of Time Compilation',
           definition: 'Compiles high level code to native machine code like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
-          tags: ['compilers', "virtual_machines"],
+          tags: ['compilers', "virtual machines"],
         }, {
           acronym: '',
           term: 'Android',
           definition: 'Mobile operating system, based on the Linux kernel.',
-          tags: ['android', 'mobile', 'operating_systems'],
+          tags: ['android', 'mobile', 'operating systems'],
         }
       ]
   };
@@ -43,7 +47,7 @@ class Terms extends React.Component {
   generateListItems = data => {
     const { classes } = this.props;
 
-    return this.state.data.map((datum) => (
+    return this.state.data.map(datum => (
         <ExpansionPanel key={datum.term} expanded={this.state.expanded === datum.term} onChange={this.handleChange(datum.term)}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>{datum.term}</Typography>
@@ -52,6 +56,11 @@ class Terms extends React.Component {
             <ExpansionPanelDetails>
                 <Typography>{datum.definition}</Typography>
             </ExpansionPanelDetails>
+            
+            {datum.tags && datum.tags.map((tag) => 
+                <Chip label={tag} className={classes.chip} />
+            )}
+
         </ExpansionPanel>
     ))
   };
