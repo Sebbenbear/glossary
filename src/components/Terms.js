@@ -58,7 +58,7 @@ class Terms extends React.Component {
             </ExpansionPanelDetails>
             
             {datum.tags && datum.tags.map((tag) => 
-                <Chip label={tag} className={classes.chip} />
+                <Chip label={tag} className={classes.chip} key={tag}/>
             )}
 
         </ExpansionPanel>
