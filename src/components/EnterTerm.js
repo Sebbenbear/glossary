@@ -28,10 +28,10 @@ const styles = theme => ({
 
 class EnterTerm extends React.Component {
   state = {
-    acronym: 'AOT',
-    term: 'Ahead of Time Compilation',
-    definition: 'Compiles high level code to native machine conde like other compilers but also compiles the bytecode of the running virtual machine on the fly.',
-    tags: 'compilers',
+    acronym: '',
+    term: '',
+    definition: '',
+    tags: '',
   };
 
   handleChange = event => {
@@ -55,13 +55,15 @@ class EnterTerm extends React.Component {
   };
 
   handleDone = () => {
+    const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later
+
     const term = Object.assign({
-        acronym: this.state.acronym, 
+        acronym: this.state.acronym,
         term: this.state.term,
         definition: this.state.definition,
-        tags: this.state.tags.split(',') // store tags in an array for manipulation later
+        tags: tagList
     }, this.state);
-    console.table(term);
+    
     firebase.writeNewTerm(term);
   }
 
