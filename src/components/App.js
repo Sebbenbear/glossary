@@ -9,61 +9,9 @@ import Terms from './Terms';
 
 import * as routes from '../constants/routes';
 
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth';
+import * as firebase from '../firebase/firebase'; 
 
-var config = {
-  apiKey: process.env.REACT_APP_FIREBASE_WEB_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-};
-
-firebase.initializeApp(config);
-
-function writeUserData(userId) {
-  firebase.database().ref('users/' + userId).set({
-    number: 1
-  });
-};
-
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    console.log('auth changed!');
-    console.log(user);
-    var userId = firebase.auth().currentUser.uid;
-    writeUserData(userId)
-  } else {
-    // No user is signed in.
-    console.log('no user')
-  }
-});
-
-firebase.auth().signInAnonymously().catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  console.log(errorCode);
-  console.log(errorMessage);
-});
-
-// let res = firebase.auth()
-//   .signInWithEmailAndPassword('email@gmail.com', '')
-//   .then(() => {
-//     var userId = firebase.auth().currentUser.uid;
-//     console.log(userId);
-//     writeUserData(userId);
-//   })
-//   .catch(function(error) {
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//     console.log(errorCode);
-//     console.log(errorMessage);
-//   }
-// );
-// console.log(res);
+firebase.signInAnonymously();
 
 const App = () => (
   <Router>
@@ -95,7 +43,6 @@ const data = [
     tags: ['android', 'mobile', 'operating_systems'],
   }
 ];
-
 
 const Home = () => (
   <div className="App">
