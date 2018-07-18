@@ -1,5 +1,5 @@
 {
-	"data": [{
+	"terms": [{
 		"acronym": "AOT",
 		"term": "Ahead of Time Compilation",
 		"definition": "Compiles high level code to native machine code like other compilers but also compiles the bytecode of the running virtual machine on the fly.",
