@@ -28,21 +28,42 @@ function writeUserData(userId) {
   });
 };
 
-let res = firebase.auth()
-  .signInWithEmailAndPassword('email@gmail.com', '')
-  .then(() => {
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    console.log('auth changed!');
+    console.log(user);
     var userId = firebase.auth().currentUser.uid;
-    console.log(userId);
-    writeUserData(userId);
-  })
-  .catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
+    writeUserData(userId)
+  } else {
+    // No user is signed in.
+    console.log('no user')
   }
-);
-console.log(res);
+});
+
+firebase.auth().signInAnonymously().catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  console.log(errorCode);
+  console.log(errorMessage);
+});
+
+// let res = firebase.auth()
+//   .signInWithEmailAndPassword('email@gmail.com', '')
+//   .then(() => {
+//     var userId = firebase.auth().currentUser.uid;
+//     console.log(userId);
+//     writeUserData(userId);
+//   })
+//   .catch(function(error) {
+//     var errorCode = error.code;
+//     var errorMessage = error.message;
+//     console.log(errorCode);
+//     console.log(errorMessage);
+//   }
+// );
+// console.log(res);
 
 const App = () => (
   <Router>
