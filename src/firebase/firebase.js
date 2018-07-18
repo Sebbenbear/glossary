@@ -10,28 +10,32 @@ var config = {
 };
 
 firebase.initializeApp(config);
+let uid;
 
-function writeUserData(userId) {
-  firebase.database().ref('users/' + userId).set({
-    terms: {}
-  });
-};
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    uid = user.uid;
+    console.log('user signed in');
+  } else {
+    console.log('user signed out');
+  }
+});
 
-function writeNewTerm(uid) {
-  // A term entry.
-  const termData = {
-    acronym: '',
-    term: 'Android',
-    definition: 'Mobile operating system, based on the Linux kernel.',
-    tags: ['android', 'mobile', 'operating systems']
-  };
+// function writeUserData(userId) {
+//   firebase.database().ref('users/' + userId).set({
+//     terms: {}
+//   });
+// };
+
+// create a new term entry in the database
+function writeNewTerm(term) {
   
   // Get a key for a new term.
   var newTermKey = firebase.database().ref().child('terms').push().key;
 
   // Write the new post's data simultaneously in the posts list and the user's post list.
   var updates = {};
-  updates['/user-terms/' + uid + '/' + newTermKey] = termData;
+  updates['/user-terms/' + uid + '/' + newTermKey] = term;
 
   // Push the reference update
   return firebase.database().ref().update(updates);
@@ -50,10 +54,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log('auth changed!');
     console.log(user);
     var userId = firebase.auth().currentUser.uid;
-    //writeUserData(userId)
-    //writeNewTerm(userId);
   } else {
-    // No user is signed in.
     console.log('no user')
   }
 });
