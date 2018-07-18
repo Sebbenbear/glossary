@@ -40,6 +40,10 @@ The following files will be created:
 
 #### 5. Deploy the application
 
+#### 6. Firebase - realtime database
+
+You may need to manually refresh the database if the app isn't getting updates from the database.
+
 `firebase deploy`
 
 Now, just click on the link and your app should be up and ready to go!
