@@ -55,7 +55,12 @@ class EnterTerm extends React.Component {
   };
 
   handleDone = () => {
-    const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later
+    const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later  
+
+    // check for empty tags
+    if (!this.state.term) {
+      return;
+    }
 
     const term = Object.assign({
         acronym: this.state.acronym,
