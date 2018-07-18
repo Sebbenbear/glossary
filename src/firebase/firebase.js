@@ -11,6 +11,7 @@ var config = {
 
 firebase.initializeApp(config);
 let uid;
+let userTerms = [];
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -27,6 +28,12 @@ firebase.auth().onAuthStateChanged(function(user) {
 //   });
 // };
 
+
+function getTerms() {
+  return userTerms;
+}
+
+
 // create a new term entry in the database
 function writeNewTerm(term) {
   
@@ -42,18 +49,31 @@ function writeNewTerm(term) {
 }
 
 // if the user is new, create a new element for the data
-function createUserTermData(userId) {
-    firebase.database().ref('users/' + userId).set({
-      terms: {}
-    });
-};
+// function createUserTermData(userId) {
+//     firebase.database().ref('users/' + userId).set({
+//       terms: {}
+//     });
+// };
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    console.log('auth changed!');
-    console.log(user);
-    var userId = firebase.auth().currentUser.uid;
+    //console.log('auth changed!');
+    //console.log(user);
+    //var userId = firebase.auth().currentUser.uid;
+    var starCountRef = firebase.database().ref('user-terms/' + uid);
+    starCountRef.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        // var childKey = childSnapshot.key;
+        var childData = childSnapshot.val();
+
+        userTerms.push(childData);
+
+        
+      });
+      console.log(userTerms);
+    });
+
   } else {
     console.log('no user')
   }
@@ -61,7 +81,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 const signInAnonymously = () => {
     firebase.auth().signInAnonymously()
-    .then(createUserTermData)
     .catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
@@ -90,4 +109,5 @@ const signInAnonymously = () => {
 export {
     signInAnonymously,
     writeNewTerm,
+    getTerms,
 };
