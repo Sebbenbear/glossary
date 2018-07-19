@@ -20,7 +20,7 @@ const App = () => (
       {/* <Route exact path={routes.LANDING} component={Home} /> */}
 
       {/* Use functional stateless components then offload to transfer new props */}
-      <Route exact path={routes.LANDING} render={(props) => <Home {...props} data={data} />} />
+      <Route exact path={routes.LANDING} component={Home} />} />
       <Route path={routes.ENTER_TERM} component={EnterTerm} />
 
     </div>
