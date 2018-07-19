@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 
-import * as firebase from '../firebase/firebase'; 
+// import * as firebase from '../firebase/firebase'; 
 
 const styles = theme => ({
   container: {
@@ -31,7 +31,7 @@ class EnterTerm extends React.Component {
     acronym: '',
     term: '',
     definition: '',
-    tags: '',
+    tags: ''
   };
 
   handleChange = event => {
@@ -61,6 +61,12 @@ class EnterTerm extends React.Component {
     if (!this.state.term) {
       return;
     }
+    if (!this.props.database) {
+      console.log(this.props.database);
+      return;
+    } else {
+      console.log('NOOO', this.props.database);
+    }
 
     const term = Object.assign({
         acronym: this.state.acronym,
@@ -69,11 +75,21 @@ class EnterTerm extends React.Component {
         tags: tagList
     }, this.state);
     
-    firebase.writeNewTerm(term);
+    //firebase.writeNewTerm(term);
+    var newTermKey = this.props.database.ref().child('terms').push().key;
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['/user-terms/' + this.props.userId + '/' + newTermKey] = term;
+
+    // Push the reference update
+    return this.props.database.ref().update(updates);
   }
 
   render() {
     const { classes } = this.props;
+    console.log(this.props.database);
+    console.log(this.props);
 
     return (
       <div>

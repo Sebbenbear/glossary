@@ -8,8 +8,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import grey from '@material-ui/core/colors/grey';
 
 import Terms from './Terms';
+import EnterTerm from './EnterTerm';
 
-import { Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import * as routes from '../constants/routes';
 
 import firebase from 'firebase/app';
@@ -83,9 +84,12 @@ class Home extends React.Component {
         this.setState({
           isLoading: false,
           data: userTerms,
-          userId: userId
+          userId: userId,
+          database: database,
         });
         console.log(this.state.data);
+        console.log(this.state.userId);
+        console.log(this.state.database);
       });
     });
   }
@@ -107,7 +111,6 @@ class Home extends React.Component {
     const { classes } = this.props;
     const isLoading = this.state.isLoading;
     const data = this.state.data;
-    const userId = this.state.userId;
 
     if (isLoading) {
       return (
@@ -126,7 +129,14 @@ class Home extends React.Component {
         </p>
         }
 
-        { data.length > 0 && <Terms data={data} databaseRef={database} userId={userId}/> }
+        { data.length > 0 && <Terms data={data}/> }
+        
+        {/* <Route path={routes.ENTER_TERM} component={EnterTerm} /> */}
+        <Route
+          path={routes.ENTER_TERM}
+          render={(props) => <EnterTerm {...props} database={this.state.database} userId={this.state.userId} />}
+        />
+
         <Link to={routes.ENTER_TERM}>
           <Button variant="fab" color="primary" aria-label="Add" className={classes.fab}> {/* #C1D09B - should be this colour*/} 
             <AddIcon />
