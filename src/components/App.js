@@ -6,10 +6,6 @@ import EnterTerm from './EnterTerm';
 import Home from './Home';
 
 import * as routes from '../constants/routes';
-import * as firebase from '../firebase/firebase'; 
-
-firebase.signInAnonymously();
-let data = firebase.getTerms();
 
 const App = () => (
   <Router>
