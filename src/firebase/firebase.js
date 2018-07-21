@@ -9,105 +9,14 @@ var config = {
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
 };
 
-firebase.initializeApp(config);
-let uid;
-let userTerms = [];
-
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    uid = user.uid;
-    console.log('user signed in');
-  } else {
-    console.log('user signed out');
-  }
-});
-
-// function writeUserData(userId) {
-//   firebase.database().ref('users/' + userId).set({
-//     terms: {}
-//   });
-// };
-
-
-function getTerms() {
-  return userTerms;
+if (!firebase.apps.length) { // if firebase hasn't been initialised, initialise it
+  firebase.initializeApp(config);
 }
 
+const auth = firebase.auth();
+const database = firebase.database();
 
-// create a new term entry in the database
-function writeNewTerm(term) {
-  
-  // Get a key for a new term.
-  var newTermKey = firebase.database().ref().child('terms').push().key;
-
-  // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
-  updates['/user-terms/' + uid + '/' + newTermKey] = term;
-
-  // Push the reference update
-  return firebase.database().ref().update(updates);
-}
-
-// if the user is new, create a new element for the data
-// function createUserTermData(userId) {
-//     firebase.database().ref('users/' + userId).set({
-//       terms: {}
-//     });
-// };
-
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    //console.log('auth changed!');
-    //console.log(user);
-    //var userId = firebase.auth().currentUser.uid;
-    var starCountRef = firebase.database().ref('user-terms/' + uid);
-    starCountRef.on('value', function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        // var childKey = childSnapshot.key;
-        var childData = childSnapshot.val();
-
-        userTerms.push(childData);
-
-        
-      });
-      console.log(userTerms);
-    });
-
-  } else {
-    console.log('no user')
-  }
-});
-
-const signInAnonymously = () => {
-    firebase.auth().signInAnonymously()
-    .catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
-    });
-}
-
-// let res = firebase.auth()
-//   .signInWithEmailAndPassword('email@gmail.com', '')
-//   .then(() => {
-//     var userId = firebase.auth().currentUser.uid;
-//     console.log(userId);
-//     writeUserData(userId);
-//   })
-//   .catch(function(error) {
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//     console.log(errorCode);
-//     console.log(errorMessage);
-//   }
-// );
-// console.log(res);
-
-export {
-    signInAnonymously,
-    writeNewTerm,
-    getTerms,
+export { 
+  auth,
+  database
 };

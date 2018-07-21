@@ -8,25 +8,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import grey from '@material-ui/core/colors/grey';
 
 import Terms from './Terms';
-import EnterTerm from './EnterTerm';
 
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as routes from '../constants/routes';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
-
-// Set up firebase
-var config = {
-  apiKey: process.env.REACT_APP_FIREBASE_WEB_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-};
-let app = firebase.initializeApp(config);
-let auth = app.auth();
-let database = app.database();
+import { auth, database } from '../firebase/firebase';
 
 const styles = theme => ({
   fab: {
@@ -48,63 +34,29 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true,
-      data: []
+      isLoading: true
     };
   };
 
-//   // when running setstate, complains that it's not a function
-//   authStateObserver(user) {
-//     if (user) {
-//       console.log('auth state changed! user is signed in');
-//       //console.log(user);
-//     } else {
-//       console.log('auth state changed! user not signed in');
-//     }
-//     //   this.setState({
-//     //     isLoading: false
-//     //   });
-//       //this.updateee(user);
-//   }
-
-  initFirebaseAuth() {
-    // Listen to auth state changes.
-    //console.log(this.authStateObserver); // not a function??
-    // auth.onAuthStateChanged(this.authStateObserver);
+  componentWillMount() {
+    auth.signInAnonymously();
     auth.onAuthStateChanged((user) => {
-      let userId = auth.currentUser.uid;
-
+      let termsRef = database.ref('/user-terms/' + auth.currentUser.uid);
       let userTerms = [];
-
-      let termsRef = database.ref('user-terms/' + userId);
       termsRef.on('value', (snapshot) => {
         snapshot.forEach((childSnapShot) => {
           userTerms.push(childSnapShot.val());
         });
         this.setState({
           isLoading: false,
-          data: userTerms,
-          userId: userId,
-          database: database,
+          data: userTerms
         });
-        console.log(this.state.data);
-        console.log(this.state.userId);
-        console.log(this.state.database);
       });
     });
   }
 
-  signIn() {
-    firebase.auth().signInAnonymously();
-  }
-
-  componentDidMount() {
-    this.setState({
-        isLoading: true
-    });
-    this.signIn();
-    this.initFirebaseAuth();
-    // this.loadData();
+  componentWillUnmount() {
+    
   }
 
   render() {
@@ -130,12 +82,6 @@ class Home extends React.Component {
         }
 
         { data.length > 0 && <Terms data={data}/> }
-        
-        {/* <Route path={routes.ENTER_TERM} component={EnterTerm} /> */}
-        <Route
-          path={routes.ENTER_TERM}
-          render={(props) => <EnterTerm {...props} database={this.state.database} userId={this.state.userId} />}
-        />
 
         <Link to={routes.ENTER_TERM}>
           <Button variant="fab" color="primary" aria-label="Add" className={classes.fab}> {/* #C1D09B - should be this colour*/} 

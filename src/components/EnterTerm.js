@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 
-// import * as firebase from '../firebase/firebase'; 
+import { auth, database } from '../firebase/firebase';
 
 const styles = theme => ({
   container: {
@@ -27,6 +27,7 @@ const styles = theme => ({
 });
 
 class EnterTerm extends React.Component {
+
   state = {
     acronym: '',
     term: '',
@@ -54,19 +55,12 @@ class EnterTerm extends React.Component {
     }
   };
 
-  handleDone = () => {
-    const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later  
-
-    // check for empty tags
+  handleSubmit = (e) => {
     if (!this.state.term) {
       return;
     }
-    if (!this.props.database) {
-      console.log(this.props.database);
-      return;
-    } else {
-      console.log('NOOO', this.props.database);
-    }
+
+    const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later  
 
     const term = Object.assign({
         acronym: this.state.acronym,
@@ -74,22 +68,15 @@ class EnterTerm extends React.Component {
         definition: this.state.definition,
         tags: tagList
     }, this.state);
-    
-    //firebase.writeNewTerm(term);
-    var newTermKey = this.props.database.ref().child('terms').push().key;
 
-    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var newTermKey = database.ref().child('user-terms').push().key;
     var updates = {};
-    updates['/user-terms/' + this.props.userId + '/' + newTermKey] = term;
-
-    // Push the reference update
-    return this.props.database.ref().update(updates);
+    updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
+    database.ref().update(updates);
   }
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.database);
-    console.log(this.props);
 
     return (
       <div>
@@ -117,7 +104,7 @@ class EnterTerm extends React.Component {
         </div>
 
         <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button variant="contained" color="primary" aria-label="Done" className={classes.button} onClick={this.handleDone}>Done</Button>
+            <Button variant="contained" color="primary" aria-label="Done" className={classes.button} onClick={this.handleSubmit}>Done</Button>
         </Link>
       </div>
     );
