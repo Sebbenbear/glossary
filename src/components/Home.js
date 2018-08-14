@@ -16,8 +16,8 @@ import { auth, database } from '../firebase/firebase';
 
 const styles = theme => ({
   fab: {
-    position: 'absolute', 
-    bottom: '20px', 
+    position: 'absolute',
+    bottom: '20px',
     right: '20px'
   },
   block: {
