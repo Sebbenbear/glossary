@@ -11,7 +11,6 @@ import HomePage from './Home';
 import AccountPage from './Account';
 
 import EnterTerm from './EnterTerm';
-//import Home from './Home';
 
 import * as routes from '../constants/routes';
 
@@ -20,7 +19,12 @@ const App = () => (
   <Router>
     <div>
       <Navigation />
-      <hr/>
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">Tech Glossary</h1>
+        </header>
+      </div>
+
       <Route 
         exact path={routes.LANDING}
         component={() => <LandingPage/>} 
@@ -48,11 +52,6 @@ const App = () => (
       
     </div>
     {/* <div>
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Tech Glossary</h1>
-        </header>
-      </div> */}
 
       {/* <Route path="/signup" component={SignUp} /> */}
       {/* <Route exact path={routes.LANDING} component={Home} /> */}
