@@ -1,7 +1,21 @@
 import { auth } from 'firebase';
 
-export const signUpAnonymously = () => {
-    auth.signUpAnonymously();
+export const doCreateUserWithEmailAndPassword = (email, password) =>
+  auth.createUserWithEmailAndPassword(email, password);
+
+export const doSignInWithEmailAndPassword = (email, password) =>
+  auth.signInWithEmailAndPassword(email, password);
+
+export const signOut = () => {
+  auth.signOut();
 }
 
-// TODO: add features for signing up, in and out, and password reset using different auth methods
+export const signUpAnonymously = () => {
+  auth.signUpAnonymously();
+}
+
+export const doPasswordReset = (email) =>
+  auth.sendPasswordResetEmail(email);
+
+export const doPasswordUpdate = (password) =>
+  auth.currentUser.updatePassword(password);
