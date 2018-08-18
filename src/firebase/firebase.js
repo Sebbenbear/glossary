@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
-import 'firebase/database';
 import 'firebase/auth';
+import 'firebase/database';
 
 var config = {
   apiKey: process.env.REACT_APP_FIREBASE_WEB_API_KEY,

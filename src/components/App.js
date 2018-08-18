@@ -13,7 +13,6 @@ import AccountPage from './Account';
 import EnterTerm from './EnterTerm';
 
 import * as routes from '../constants/routes';
-
 import { firebase } from '../firebase';
 
 class App extends Component {
@@ -35,7 +34,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navigation authUser={this.state.authUser}/>
+          <Navigation authUser={this.state.authUser} />
           <div className="App">
             <header className="App-header">
               <h1 className="App-title">Tech Glossary</h1>
