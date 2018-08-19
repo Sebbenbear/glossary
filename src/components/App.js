@@ -34,13 +34,17 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navigation authUser={this.state.authUser} />
           <div className="App">
             <header className="App-header">
               <h1 className="App-title">Tech Glossary</h1>
             </header>
           </div>
+          <Navigation authUser={this.state.authUser} />
 
+          <Route 
+            exact path={routes.SIGN_IN}
+            component={() => <SignInPage/>} 
+          />
           <Route 
             exact path={routes.LANDING}
             component={() => <LandingPage/>} 
@@ -48,10 +52,6 @@ class App extends Component {
           <Route 
             exact path={routes.SIGN_UP}
             component={() => <SignUpPage/>} 
-          />
-          <Route 
-            exact path={routes.SIGN_IN}
-            component={() => <SignInPage/>} 
           />
           <Route 
             exact path={routes.PASSWORD_FORGET}

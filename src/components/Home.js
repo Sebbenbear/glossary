@@ -38,26 +38,22 @@ class Home extends React.Component {
     };
   };
 
-  componentWillMount() {
-    auth.signInAnonymously();
-    auth.onAuthStateChanged((user) => {
-      let termsRef = database.ref('/user-terms/' + auth.currentUser.uid);
-      let userTerms = [];
-      termsRef.on('value', (snapshot) => {
-        snapshot.forEach((childSnapShot) => {
-          userTerms.push(childSnapShot.val());
-        });
-        this.setState({
-          isLoading: false,
-          data: userTerms
-        });
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    
-  }
+  // componentWillMount() {
+  //   auth.signInAnonymously();
+  //   auth.onAuthStateChanged((user) => {
+  //     let termsRef = database.ref('/user-terms/' + auth.currentUser.uid);
+  //     let userTerms = [];
+  //     termsRef.on('value', (snapshot) => {
+  //       snapshot.forEach((childSnapShot) => {
+  //         userTerms.push(childSnapShot.val());
+  //       });
+  //       this.setState({
+  //         isLoading: false,
+  //         data: userTerms
+  //       });
+  //     });
+  //   });
+  // }
 
   render() {
     const { classes } = this.props;

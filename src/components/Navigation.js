@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import SignOutButton from './SignOut';
 import * as routes from '../constants/routes';
+import Button from '@material-ui/core/Button';
 
 const Navigation = ({ authUser }) =>
   <div>
@@ -18,9 +19,13 @@ const NavigationAuth = () =>
   </ul>
 
 const NavigationNonAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.SIGN_UP}>Sign Up</Link></li>
-  </ul>
+  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <Button variant="flat" color="primary" component={Link} to={routes.SIGN_IN}>
+      Sign In
+    </Button>
+    <Button variant="flat" color="primary" component={Link} to={routes.SIGN_UP}>
+      Sign Up
+    </Button>
+  </div>
 
 export default Navigation;
