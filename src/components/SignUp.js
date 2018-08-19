@@ -3,6 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 const SignUpPage = ({ history }) => ( // destructure history part of prop
   <div>
     <h1>Sign Up</h1>
@@ -10,10 +13,7 @@ const SignUpPage = ({ history }) => ( // destructure history part of prop
   </div>
 );
 
-//https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/#react-application-setup
-
 const INITIAL_STATE = {
-  username: '',
   email: '',
   password1: '',
   password2: '',
@@ -33,7 +33,6 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     const {
-      username,
       email,
       passwordOne,
     } = this.state;
@@ -55,7 +54,6 @@ class SignUpForm extends Component {
 
   render() {
     const {
-      username,
       email,
       passwordOne,
       passwordTwo,
@@ -65,40 +63,31 @@ class SignUpForm extends Component {
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
-      email === '' ||
-      username === '';
+      email === '';
 
     return (
       <form onSubmit={this.onSubmit}>
-      <input
-          value={username}
-          onChange={event => this.setState(byPropKey('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
+        <TextField 
+          id="email" 
+          label="Email" 
           onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
+          type="email"
         />
-        <input
-          value={passwordOne}
+        <TextField 
+          id="passwordOne" 
+          label="Password" 
           onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
           type="password"
-          placeholder="Password"
         />
-        <input
-          value={passwordTwo}
+        <TextField 
+          id="passwordTwo" 
+          label="Confirm password" 
           onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
           type="password"
-          placeholder="Confirm Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button variant="contained" color="primary" disabled={isInvalid} type="submit">
           Sign Up
-        </button>
-
-        {/* Display the error msg at the bottom, if there is one */}
+        </Button>
         { error && <p>{error.message}</p> } 
         </form>
     );
