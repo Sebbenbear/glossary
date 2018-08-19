@@ -11,6 +11,8 @@ import Terms from './Terms';
 
 import { Link } from "react-router-dom";
 import * as routes from '../constants/routes';
+import { auth, db } from '../firebase';
+import { database } from '../firebase/firebase';
 
 import withAuthorization from './Session/withAuthorization';
 
@@ -40,9 +42,34 @@ class Home extends React.Component {
 
   componentWillMount() {
     this.setState({
-      isLoading: false
+      isLoading: false,
+      data: [{ 
+        acronym: "aaa", 
+        definition: "heyo",
+        tags: ["yeah", "nah"],
+        term: "wizards"
+      }]
     });
   }
+
+  // Doesn't move on to loading state. User exists
+  // componentWillMount() {
+  //   let termsRef = database.ref('/user-terms/' + auth.getUid());
+  //   let userTerms = [];
+  //   console.log(auth.getUid());
+  //   console.log(termsRef)
+  //   termsRef.on('value', (snapshot) => {
+  //     snapshot.forEach((childSnapShot) => {
+  //       userTerms.push(childSnapShot.val());
+  //     });
+  //     this.setState({
+  //       isLoading: false,
+  //       data: userTerms
+  //     });
+  //   });
+  // }
+
+
   // componentWillMount() {
   //   auth.signInAnonymously();
   //   auth.onAuthStateChanged((user) => {

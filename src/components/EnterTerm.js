@@ -8,7 +8,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 
-import { auth, database } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
+import firebase from '../firebase/firebase';
+import * as routes from '../constants/routes';
 
 import withAuthorization from './Session/withAuthorization';
 
@@ -28,7 +30,17 @@ const styles = theme => ({
   }
 });
 
+// const EnterTermPage = ({ history }) =>
+//   <div>
+//     <h1>Enter Term</h1>
+//     <EnterTerm history={history} />
+//   </div>
+  
 class EnterTerm extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   state = {
     acronym: '',
@@ -57,25 +69,48 @@ class EnterTerm extends React.Component {
     }
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = (event) => {
+    const { history } = this.props;
+    console.log(history);
+
     if (!this.state.term) {
       return;
     }
 
-    const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later  
+    const tagList = [...this.state.tags.split(',')]
 
     const term = Object.assign({
-        acronym: this.state.acronym,
-        term: this.state.term,
-        definition: this.state.definition,
-        tags: tagList
+      acronym: this.state.acronym,
+      term: this.state.term,
+      definition: this.state.definition,
+      tags: tagList
     }, this.state);
 
-    var newTermKey = database.ref().child('user-terms').push().key;
-    var updates = {};
-    updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
-    database.ref().update(updates);
+    console.log(term);
+    //TODO add ability to add HOME to push route
+    //history.push(routes.HOME);
+    //event.preventDefault();
   }
+
+  // handleSubmit = (e) => {
+  //   if (!this.state.term) {
+  //     return;
+  //   }
+
+  //   const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later  
+
+  //   const term = Object.assign({
+  //       acronym: this.state.acronym,
+  //       term: this.state.term,
+  //       definition: this.state.definition,
+  //       tags: tagList
+  //   }, this.state);
+
+  //   var newTermKey = database.ref().child('user-terms').push().key;
+  //   var updates = {};
+  //   updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
+  //   database.ref().update(updates);
+  // }
 
   render() {
     const { classes } = this.props;
@@ -113,9 +148,9 @@ class EnterTerm extends React.Component {
   }
 }
 
-EnterTerm.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// EnterTerm.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 const authCondition = (authUser) => !!authUser;
 
