@@ -12,7 +12,7 @@ import Terms from './Terms';
 import { Link } from "react-router-dom";
 import * as routes from '../constants/routes';
 
-import { auth, database } from '../firebase/firebase';
+// import { auth, database } from '../firebase/firebase';
 
 const styles = theme => ({
   fab: {

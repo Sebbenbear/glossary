@@ -14,6 +14,7 @@ const SignUpPage = ({ history }) => ( // destructure history part of prop
 );
 
 const INITIAL_STATE = {
+  username: '',
   email: '',
   password1: '',
   password2: '',
@@ -33,6 +34,7 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     const {
+      username,
       email,
       passwordOne,
     } = this.state;
@@ -50,10 +52,12 @@ class SignUpForm extends Component {
 
     // Stop browser reloading the page
     event.preventDefault();
+    console.log(username);
   }
 
   render() {
     const {
+      username,
       email,
       passwordOne,
       passwordTwo,
@@ -61,12 +65,19 @@ class SignUpForm extends Component {
     } = this.state;
 
     const isInvalid =
+      username === '' ||
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '';
 
     return (
       <form onSubmit={this.onSubmit}>
+        <TextField 
+          id="username" 
+          label="User name" 
+          onChange={event => this.setState(byPropKey('username', event.target.value))}
+          type="text"
+        />
         <TextField 
           id="email" 
           label="Email" 
