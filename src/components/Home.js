@@ -12,7 +12,7 @@ import Terms from './Terms';
 import { Link } from "react-router-dom";
 import * as routes from '../constants/routes';
 
-// import { auth, database } from '../firebase/firebase';
+import withAuthorization from './Session/withAuthorization';
 
 const styles = theme => ({
   fab: {
@@ -93,4 +93,6 @@ Home.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Home);
+const authCondition = (authUser) => !!authUser;
+
+export default withAuthorization(authCondition)(withStyles(styles)(Home));
