@@ -20,9 +20,9 @@ const Navigation = () =>
 
 const NavigationAuth = () =>
   <div style={style}>
-    <Button variant="flat" color="primary" component={Link} to={routes.LANDING}>
+    {/* <Button variant="flat" color="primary" component={Link} to={routes.LANDING}>
       Landing
-    </Button>
+    </Button> */}
     <Button variant="flat" color="primary" component={Link} to={routes.HOME}>
       Home
     </Button>
