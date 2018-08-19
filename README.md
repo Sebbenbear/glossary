@@ -4,6 +4,11 @@
 
 This is a small app that I built to keep track of all the different technical terms I'm learning at [Recurse Center](https://www.recurse.com/).
 
+The structure of this app closely follows this tutorial:
+
+https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/#react-application-setup
+
+
 ## Add the database
 
 Follow these [instructions](https://firebase.google.com/docs/database/web/start)
