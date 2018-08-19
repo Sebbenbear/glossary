@@ -5,6 +5,9 @@ import { SignUpLink } from './SignUp';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 const SignInPage = ({ history }) =>
   <div>
     <h1>Sign In</h1>
@@ -64,22 +67,21 @@ class SignInForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
-          value={email}
+        <TextField 
+          id="email" 
+          label="Email" 
           onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
+          type="email"
         />
-        <input
-          value={password}
+        <TextField 
+          id="password" 
+          label="Password" 
           onChange={event => this.setState(byPropKey('password', event.target.value))}
           type="password"
-          placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button variant="contained" color="primary" disabled={isInvalid} type="submit">
           Sign In
-        </button>
-
+        </Button>
         { error && <p>{error.message}</p> }
       </form>
     );
