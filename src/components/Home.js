@@ -38,6 +38,11 @@ class Home extends React.Component {
     };
   };
 
+  componentWillMount() {
+    this.setState({
+      isLoading: false
+    });
+  }
   // componentWillMount() {
   //   auth.signInAnonymously();
   //   auth.onAuthStateChanged((user) => {
@@ -71,16 +76,16 @@ class Home extends React.Component {
 
     return (
       <div className="App">
-        { data.length === 0 && 
+        { !data && 
         <p className="App-intro">
             There's nothing here, add a term!
         </p>
         }
 
-        { data.length > 0 && <Terms data={data}/> }
+        { data && data.length > 0 && <Terms data={data}/> }
 
         <Link to={routes.ENTER_TERM}>
-          <Button variant="fab" color="primary" aria-label="Add" className={classes.fab}> {/* #C1D09B - should be this colour*/} 
+          <Button variant="fab" color="primary" aria-label="Add" className={classes.fab}>
             <AddIcon />
           </Button>
         </Link>

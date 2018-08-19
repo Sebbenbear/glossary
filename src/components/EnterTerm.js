@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 
 import { auth, database } from '../firebase/firebase';
 
+import withAuthorization from './Session/withAuthorization';
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -115,4 +117,6 @@ EnterTerm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(EnterTerm);
+const authCondition = (authUser) => !!authUser;
+
+export default withAuthorization(authCondition)(withStyles(styles)(EnterTerm));
