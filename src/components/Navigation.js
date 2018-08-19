@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import AuthUserContext from './Session/AuthUserContext';
 import SignOutButton from './SignOut';
 import * as routes from '../constants/routes';
+
 import Button from '@material-ui/core/Button';
 
-const Navigation = ({ authUser }) =>
-  <div>
-    { authUser ? <NavigationAuth /> : <NavigationNonAuth /> }
-  </div>
+// Wrap the Navigation component in a Consumer context, so it has access to authUser
+const Navigation = () =>
+  <AuthUserContext.Consumer>
+    { authUser => authUser ? <NavigationAuth /> : <NavigationNonAuth /> }
+  </AuthUserContext.Consumer>
 
 const NavigationAuth = () =>
   <ul>
