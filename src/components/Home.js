@@ -40,34 +40,34 @@ class Home extends React.Component {
     };
   };
 
-  componentWillMount() {
-    this.setState({
-      isLoading: false,
-      data: [{ 
-        acronym: "aaa", 
-        definition: "heyo",
-        tags: ["yeah", "nah"],
-        term: "wizards"
-      }]
-    });
-  }
-
-  // Doesn't move on to loading state. User exists
   // componentWillMount() {
-  //   let termsRef = database.ref('/user-terms/' + auth.getUid());
-  //   let userTerms = [];
-  //   console.log(auth.getUid());
-  //   console.log(termsRef)
-  //   termsRef.on('value', (snapshot) => {
-  //     snapshot.forEach((childSnapShot) => {
-  //       userTerms.push(childSnapShot.val());
-  //     });
-  //     this.setState({
-  //       isLoading: false,
-  //       data: userTerms
-  //     });
+  //   this.setState({
+  //     isLoading: false,
+  //     data: [{ 
+  //       acronym: "aaa", 
+  //       definition: "heyo",
+  //       tags: ["yeah", "nah"],
+  //       term: "wizards"
+  //     }]
   //   });
   // }
+
+  // Doesn't move on to loading state. User exists
+  componentWillMount() {
+    let termsRef = database.ref('/user-terms/' + auth.getUid());
+    let userTerms = [];
+    console.log(auth.getUid());
+    console.log(termsRef)
+    termsRef.on('value', (snapshot) => {
+      snapshot.forEach((childSnapShot) => {
+        userTerms.push(childSnapShot.val());
+      });
+      this.setState({
+        isLoading: false,
+        data: userTerms
+      });
+    });
+  }
 
 
   // componentWillMount() {

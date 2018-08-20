@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 
-import { auth, db } from '../firebase/firebase';
+import { auth, database } from '../firebase/firebase';
 import firebase from '../firebase/firebase';
 import * as routes from '../constants/routes';
 
@@ -90,6 +90,11 @@ class EnterTerm extends React.Component {
     //TODO add ability to add HOME to push route
     //history.push(routes.HOME);
     //event.preventDefault();
+    
+    let newTermKey = database.ref().child('user-terms').push().key;
+    let updates = {};
+    updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
+    database.ref().update(updates);
   }
 
   // handleSubmit = (e) => {
@@ -106,10 +111,10 @@ class EnterTerm extends React.Component {
   //       tags: tagList
   //   }, this.state);
 
-  //   var newTermKey = database.ref().child('user-terms').push().key;
-  //   var updates = {};
-  //   updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
-  //   database.ref().update(updates);
+    // var newTermKey = database.ref().child('user-terms').push().key;
+    // var updates = {};
+    // updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
+    // database.ref().update(updates);
   // }
 
   render() {
