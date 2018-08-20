@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,8 +8,6 @@ import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 
 import { auth, database } from '../firebase/firebase';
-import firebase from '../firebase/firebase';
-import * as routes from '../constants/routes';
 
 import withAuthorization from './Session/withAuthorization';
 
@@ -29,18 +26,8 @@ const styles = theme => ({
     left: "50%",
   }
 });
-
-// const EnterTermPage = ({ history }) =>
-//   <div>
-//     <h1>Enter Term</h1>
-//     <EnterTerm history={history} />
-//   </div>
   
 class EnterTerm extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   state = {
     acronym: '',
@@ -90,7 +77,7 @@ class EnterTerm extends React.Component {
     //TODO add ability to add HOME to push route
     //history.push(routes.HOME);
     //event.preventDefault();
-    
+
     let newTermKey = database.ref().child('user-terms').push().key;
     let updates = {};
     updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;

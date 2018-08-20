@@ -11,7 +11,7 @@ import Terms from './Terms';
 
 import { Link } from "react-router-dom";
 import * as routes from '../constants/routes';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 import { database } from '../firebase/firebase';
 
 import withAuthorization from './Session/withAuthorization';
@@ -56,8 +56,6 @@ class Home extends React.Component {
   componentWillMount() {
     let termsRef = database.ref('/user-terms/' + auth.getUid());
     let userTerms = [];
-    console.log(auth.getUid());
-    console.log(termsRef)
     termsRef.on('value', (snapshot) => {
       snapshot.forEach((childSnapShot) => {
         userTerms.push(childSnapShot.val());

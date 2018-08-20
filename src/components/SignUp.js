@@ -52,7 +52,6 @@ class SignUpForm extends Component {
 
     // Stop browser reloading the page
     event.preventDefault();
-    console.log(username);
   }
 
   render() {

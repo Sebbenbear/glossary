@@ -33,7 +33,6 @@ class Terms extends React.Component {
 
   generateListItems = data => {
     const { classes } = this.props;
-    let counter = 0;
 
     return this.props.data.map(datum => (
         <ExpansionPanel key={datum.term} expanded={this.state.expanded === datum.term} onChange={this.handleChange(datum.term)}>
