@@ -5,7 +5,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import * as routes from '../constants/routes';
 
 import { auth, database } from '../firebase/firebase';
 
@@ -26,7 +27,14 @@ const styles = theme => ({
     left: "50%",
   }
 });
-  
+
+const EnterTermPage = ({ history, classes }) => (
+  <div>
+    <h1>Enter Term Page</h1>
+    <EnterTerm history={history} classes={classes}/>
+  </div>
+);
+
 class EnterTerm extends React.Component {
 
   state = {
@@ -58,7 +66,6 @@ class EnterTerm extends React.Component {
 
   handleSubmit = (event) => {
     const { history } = this.props;
-    console.log(history);
 
     if (!this.state.term) {
       return;
@@ -73,15 +80,12 @@ class EnterTerm extends React.Component {
       tags: tagList
     }, this.state);
 
-    console.log(term);
-    //TODO add ability to add HOME to push route
-    //history.push(routes.HOME);
-    //event.preventDefault();
-
     let newTermKey = database.ref().child('user-terms').push().key;
     let updates = {};
     updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
-    database.ref().update(updates);
+    database.ref().update(updates)
+      .then(history.push(routes.HOME));
+    event.preventDefault();
   }
 
   // handleSubmit = (e) => {
@@ -140,10 +144,6 @@ class EnterTerm extends React.Component {
   }
 }
 
-// EnterTerm.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
 const authCondition = (authUser) => !!authUser;
 
-export default withAuthorization(authCondition)(withStyles(styles)(EnterTerm));
+export default withAuthorization(authCondition)(withStyles(styles)(withRouter(EnterTermPage)));
