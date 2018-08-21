@@ -62,11 +62,12 @@ class Home extends React.Component {
       });
       this.setState({
         isLoading: false,
-        data: userTerms
+        data: userTerms.sort((userTermA, userTermB) => {
+          return userTermA.term.toLowerCase() > userTermB.term.toLowerCase();
+        })
       });
     });
   }
-
 
   // componentWillMount() {
   //   auth.signInAnonymously();
