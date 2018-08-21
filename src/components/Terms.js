@@ -7,6 +7,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -41,7 +42,18 @@ class Terms extends React.Component {
             {datum.acronym && <Typography className={classes.secondaryHeading}>{datum.acronym}</Typography>}
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                <Typography>{datum.definition}</Typography>
+                <Typography>
+                  {datum.definition}
+                </Typography>
+                <div>
+                  <Button variant="flat" color="primary" type="submit">
+                    <i class="material-icons">edit</i>
+                  </Button>
+                  <Button variant="flat" color="primary" type="submit">
+                    <i class="material-icons">delete</i>
+                  </Button>
+                </div>
+                
             </ExpansionPanelDetails>
             
             {/* {datum.tags && datum.tags.map((tag) => 
