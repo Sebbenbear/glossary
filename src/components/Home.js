@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import grey from '@material-ui/core/colors/grey';
+import LoadingAnimation from './LoadingAnimation';
 
 import Terms from './Terms';
 
@@ -31,6 +30,13 @@ const styles = theme => ({
   }
 });
 
+const AddTermFab = (props) => 
+  <Link to={routes.ENTER_TERM}>
+    <Button variant="fab" color="primary" aria-label="Add" className={props.classes.fab}>
+      <AddIcon />
+    </Button>
+  </Link>
+
 class Home extends React.Component {
 
   constructor(props) {
@@ -39,18 +45,6 @@ class Home extends React.Component {
       isLoading: true
     };
   };
-
-  // componentWillMount() {
-  //   this.setState({
-  //     isLoading: false,
-  //     data: [{ 
-  //       acronym: "aaa", 
-  //       definition: "heyo",
-  //       tags: ["yeah", "nah"],
-  //       term: "wizards"
-  //     }]
-  //   });
-  // }
 
   // Doesn't move on to loading state. User exists
   componentWillMount() {
@@ -93,10 +87,7 @@ class Home extends React.Component {
 
     if (isLoading) {
       return (
-        <div> 
-          <div className={classes.block}></div>
-          <CircularProgress className={classes.progress} style={{ color: grey[800] }} thickness={7} />
-        </div>
+        <LoadingAnimation classes={classes}/>
       );
     }
 
@@ -110,11 +101,7 @@ class Home extends React.Component {
 
         { data && data.length > 0 && <Terms data={data}/> }
 
-        <Link to={routes.ENTER_TERM}>
-          <Button variant="fab" color="primary" aria-label="Add" className={classes.fab}>
-            <AddIcon />
-          </Button>
-        </Link>
+        <AddTermFab classes={classes}/>
       </div>
     );
   }
