@@ -58,7 +58,10 @@ class Home extends React.Component {
   handleDelete(term) {
     let userPath = '/user-terms/' + auth.getUid();
     database.ref(userPath).child(term.termId).remove();
-    const newData = this.state.data.filter(userTerm => userTerm.term !== term);
+    //const newData = this.state.data.filter(userTerm => userTerm.term === term);
+    const newData = this.state.data.filter(userTerm => {
+      return userTerm.termId !== term.termId;
+    })
     this.setState({
       data: newData // y render function no being called. data is props so should rerender in Terms.
     });
