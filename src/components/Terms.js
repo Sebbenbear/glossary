@@ -28,15 +28,33 @@ const styles = theme => ({
 });
 
 class Terms extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
   state = {
     expanded: null,
   };
+
+  handleEdit(event) {
+    console.log(event);
+  }
+
+  handleDelete() {
+    if (this.state.expanded) {
+      this.props.handleDelete(this.state.expanded);
+      this.setState({
+        expanded: null
+      });
+    }
+  }
 
   generateListItems = data => {
     const { classes } = this.props;
 
     return this.props.data.map(datum => (
-        <ExpansionPanel key={datum.term} expanded={this.state.expanded === datum.term} onChange={this.handleChange(datum.term)}>
+        <ExpansionPanel key={datum.term} expanded={this.state.expanded === datum} onChange={this.handleChange(datum)}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>{datum.term}</Typography>
             {datum.acronym && <Typography className={classes.secondaryHeading}>{datum.acronym}</Typography>}
@@ -46,11 +64,11 @@ class Terms extends React.Component {
                   {datum.definition}
                 </Typography>
                 <div>
-                  <Button variant="flat" color="primary" type="submit">
-                    <i class="material-icons">edit</i>
+                  <Button variant="flat" color="primary" type="submit" onChange={this.handleEdit(datum)}>
+                    <i className="material-icons">edit</i>
                   </Button>
-                  <Button variant="flat" color="primary" type="submit">
-                    <i class="material-icons">delete</i>
+                  <Button variant="flat" color="primary" onClick={this.handleDelete} type="submit">
+                    <i className="material-icons">delete</i>
                   </Button>
                 </div>
                 

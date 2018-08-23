@@ -44,41 +44,53 @@ class Home extends React.Component {
     this.state = {
       isLoading: true
     };
+    this.handleDelete = this.handleDelete.bind(this);
   };
 
-  // Doesn't move on to loading state. User exists
+//   handleEdit() {
+//     var updates = {};
+//     updates['/id'] = 1;
+//     updates['/title'] = 'Apple';
+
+//     return firebase.database().ref('items').child('ITEM_KEY').update(updates);
+// }
+
+  handleDelete(term) {
+    let userPath = '/user-terms/' + auth.getUid();
+    database.ref(userPath).child(term.termId).remove();
+    const newData = this.state.data.filter(userTerm => userTerm.term !== term);
+    this.setState({
+      data: newData // y render function no being called. data is props so should rerender in Terms.
+    });
+  }
+
   componentWillMount() {
     let termsRef = database.ref('/user-terms/' + auth.getUid());
-    let userTerms = [];
-    termsRef.on('value', (snapshot) => {
-      snapshot.forEach((childSnapShot) => {
-        userTerms.push(childSnapShot.val());
-      });
+    termsRef.once('value', (snapshot) => {
+      const userTerms = snapshot.val();
+      const terms = [];
+
+      if (userTerms) {
+        for (const key of Object.keys(userTerms)) {
+          let term = userTerms[key];
+          terms.push({
+            termId: key,
+            term: term.term,
+            acronym: term.acronym,
+            definition: term.definition,
+            tags: term.tags
+          });
+        }
+      }
+
       this.setState({
         isLoading: false,
-        data: userTerms.sort((userTermA, userTermB) => {
+        data: terms.sort((userTermA, userTermB) => {
           return userTermA.term.toLowerCase() > userTermB.term.toLowerCase();
         })
       });
     });
   }
-
-  // componentWillMount() {
-  //   auth.signInAnonymously();
-  //   auth.onAuthStateChanged((user) => {
-  //     let termsRef = database.ref('/user-terms/' + auth.currentUser.uid);
-  //     let userTerms = [];
-  //     termsRef.on('value', (snapshot) => {
-  //       snapshot.forEach((childSnapShot) => {
-  //         userTerms.push(childSnapShot.val());
-  //       });
-  //       this.setState({
-  //         isLoading: false,
-  //         data: userTerms
-  //       });
-  //     });
-  //   });
-  // }
 
   render() {
     const { classes } = this.props;
@@ -99,7 +111,7 @@ class Home extends React.Component {
         </p>
         }
 
-        { data && data.length > 0 && <Terms data={data}/> }
+        { data && data.length > 0 && <Terms data={data} handleDelete={this.handleDelete}/> }
 
         <AddTermFab classes={classes}/>
       </div>
@@ -112,5 +124,10 @@ Home.propTypes = {
 };
 
 const authCondition = (authUser) => !!authUser;
+
+// export default compose(
+//   withAuthorization(authCondition),
+//   withStyles(styles)
+// )(Home)
 
 export default withAuthorization(authCondition)(withStyles(styles)(Home));
