@@ -99,7 +99,7 @@ class Home extends React.Component {
 
     return (
       <div className="App">
-        { !data && 
+        { data.length == 0 && 
         <p className="App-intro">
             There's nothing here, add a term!
         </p>
