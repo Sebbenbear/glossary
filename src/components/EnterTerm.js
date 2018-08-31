@@ -38,10 +38,11 @@ const EnterTermPage = ({ history, classes }) => (
 class EnterTerm extends React.Component {
 
   state = {
+    termId: '',
     acronym: '',
     term: '',
     definition: '',
-    tags: ''
+    tags: '',
   };
 
   handleChange = event => {
@@ -80,34 +81,33 @@ class EnterTerm extends React.Component {
       tags: tagList
     }, this.state);
 
-    let newTermKey = database.ref().child('user-terms').push().key;
+    let id;
+    if (!this.state.termId) {
+      id = database.ref().child('user-terms').push().key;
+    } else {
+      id = this.state.termId;
+    }
+
     let updates = {};
-    updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
+    updates['/user-terms/' + auth.currentUser.uid + '/' + id] = term;
     database.ref().update(updates)
       .then(history.push(routes.HOME));
     event.preventDefault();
   }
 
-  // handleSubmit = (e) => {
-  //   if (!this.state.term) {
-  //     return;
-  //   }
-
-  //   const tagList = [...this.state.tags.split(',')] // store tags in an array for manipulation later  
-
-  //   const term = Object.assign({
-  //       acronym: this.state.acronym,
-  //       term: this.state.term,
-  //       definition: this.state.definition,
-  //       tags: tagList
-  //   }, this.state);
-
-    // var newTermKey = database.ref().child('user-terms').push().key;
-    // var updates = {};
-    // updates['/user-terms/' + auth.currentUser.uid + '/' + newTermKey] = term;
-    // database.ref().update(updates);
-  // }
-
+  componentWillMount() {
+    const term = this.props.history.location.state;
+    if (term) {
+      this.setState({
+        termId: term.termId,
+        acronym: term.acronym,
+        term: term.term,
+        definition: term.definition,
+        tags: term.tags,
+      });
+    }
+  }
+  
   render() {
     const { classes } = this.props;
 

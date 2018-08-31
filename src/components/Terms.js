@@ -9,6 +9,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
+import { Link } from "react-router-dom";
+import * as routes from '../constants/routes';
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -37,10 +40,6 @@ class Terms extends React.Component {
     expanded: null,
   };
 
-  handleEdit(event) {
-    console.log(event);
-  }
-
   handleDelete() {
     if (this.state.expanded) {
       this.props.handleDelete(this.state.expanded);
@@ -54,7 +53,10 @@ class Terms extends React.Component {
     const { classes } = this.props;
 
     return this.props.data.map(datum => (
-        <ExpansionPanel key={datum.term} expanded={this.state.expanded === datum} onChange={this.handleChange(datum)}>
+        <ExpansionPanel 
+          key={datum.term} 
+          expanded={this.state.expanded === datum} 
+          onChange={this.handleChange(datum)}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>{datum.term}</Typography>
             {datum.acronym && <Typography className={classes.secondaryHeading}>{datum.acronym}</Typography>}
@@ -64,9 +66,11 @@ class Terms extends React.Component {
                   {datum.definition}
                 </Typography>
                 <div>
-                  <Button variant="flat" color="primary" type="submit" onChange={this.handleEdit(datum)}>
-                    <i className="material-icons">edit</i>
-                  </Button>
+                  <Link to={{pathname: routes.ENTER_TERM, state: this.state.expanded}}>
+                    <Button variant="flat" color="primary" type="submit">
+                      <i className="material-icons">edit</i>
+                    </Button>
+                  </Link>
                   <Button variant="flat" color="primary" onClick={this.handleDelete} type="submit">
                     <i className="material-icons">delete</i>
                   </Button>

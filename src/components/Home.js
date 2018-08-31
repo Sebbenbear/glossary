@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 const AddTermFab = (props) => 
-  <Link to={routes.ENTER_TERM}>
+  <Link to={{pathname: routes.ENTER_TERM, state: props.term}}>
     <Button variant="fab" color="primary" aria-label="Add" className={props.classes.fab}>
       <AddIcon />
     </Button>
@@ -47,18 +47,9 @@ class Home extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   };
 
-//   handleEdit() {
-//     var updates = {};
-//     updates['/id'] = 1;
-//     updates['/title'] = 'Apple';
-
-//     return firebase.database().ref('items').child('ITEM_KEY').update(updates);
-// }
-
   handleDelete(term) {
     let userPath = '/user-terms/' + auth.getUid();
     database.ref(userPath).child(term.termId).remove();
-    //const newData = this.state.data.filter(userTerm => userTerm.term === term);
     const newData = this.state.data.filter(userTerm => {
       return userTerm.termId !== term.termId;
     })
@@ -116,7 +107,7 @@ class Home extends React.Component {
 
         { data && data.length > 0 && <Terms data={data} handleDelete={this.handleDelete}/> }
 
-        <AddTermFab classes={classes}/>
+        <AddTermFab classes={classes} term=''/>
       </div>
     );
   }
