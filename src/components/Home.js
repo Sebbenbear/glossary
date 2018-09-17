@@ -14,6 +14,7 @@ import { auth } from '../firebase';
 import { database } from '../firebase/firebase';
 
 import withAuthorization from './Session/withAuthorization';
+import compose from '../utils/compose';
 
 const styles = theme => ({
   fab: {
@@ -99,7 +100,7 @@ class Home extends React.Component {
 
     return (
       <div className="App">
-        { data.length == 0 && 
+        { data.length === 0 && 
         <p className="App-intro">
             There's nothing here, add a term!
         </p>
@@ -119,9 +120,7 @@ Home.propTypes = {
 
 const authCondition = (authUser) => !!authUser;
 
-// export default compose(
-//   withAuthorization(authCondition),
-//   withStyles(styles)
-// )(Home)
-
-export default withAuthorization(authCondition)(withStyles(styles)(Home));
+export default compose(
+  withAuthorization(authCondition),
+  withStyles(styles)
+)(Home);
